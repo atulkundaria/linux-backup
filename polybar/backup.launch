@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+##!/bin/bash
+
+#terminate already running instances
+#killall -q polybar
+
+#wait until the processes have been shut down.
+#while pgrep -u $UID -x polybar > /dev/null; do sleep 1; done
+
+#desktop=$(echo $DESKTOP_SESSION)
+#count=$(xrandr --query | grep " connected" | cut -d" " -f1 | wc -l)
+
+
+#case $desktop in
+
+#	bspwm|/usr/share/xsessions/bspwm)
+#		if type "xrandr" > /dev/null; then
+#			for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+#				MONITOR=$m polybar --reload mainbar-bspwm -c ~/.config/polybar/config &
+#			done
+#		else
+#			polybar --reload main-bspwm -c ~/.config/polybar/config &
+#		fi
+		# Second polybar at bottom
+		
+		#if type "xrandr" > /dev/null; then
+		#	for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+		#		MONITOR=$m polybar --reload mainbar-bspwm-extra -c ~/.config/polybar/config &
+		#	done
+		#else
+		#	polybar --reload main-bspwm-extra -c ~/.config/polybar/config &
+		#fi
+#		;;
+#esac
+
+
+# Terminate already running bar instances
+# If all your bars have ipc enabled, you can use 
+polybar-msg cmd quit
+# Otherwise you can use the nuclear option:
+# killall -q polybar
+
+# Launch bar1 and bar2
+echo "---" | tee -a /tmp/polybar1.log /tmp/polybar2.log
+polybar example 2>&1 | tee -a /tmp/polybar1.log & disown
+
+echo "Bars launched..."
+
